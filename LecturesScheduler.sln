@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.WebApi", "LecturesScheduler.WebApi\LecturesScheduler.WebApi.csproj", "{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74E1BF48-9C4A-474A-B48B-13819E7FCE1A}
+	EndGlobalSection
+EndGlobal
