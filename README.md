@@ -345,6 +345,9 @@ var host = CreateWebHostBuilder(args).Build();
 
 After this, you application will be updating database, if there is something to update, everytime you will start it. Besides that, couple more refactorings are being done in this commit, but nothing more that is worth mentioning.
 
-## Seventh commit - adding POST
+## Sixth commit - adding POST
 
 With this commit POST request are implemented, to seed data to the database, also GetById is exposed. Nothing fancy is added, so it commit basically explains itself - enjoy!
+
+## Further reading
+.Net Core has a great functionality for health checking, please refer to the documentation: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-2.2
