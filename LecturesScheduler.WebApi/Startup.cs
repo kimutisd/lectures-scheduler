@@ -1,8 +1,10 @@
-﻿using LecturesScheduler.WebApi.Middleware.DependencyContainer;
+﻿using LecturesScheduler.Persistence;
+using LecturesScheduler.WebApi.Middleware.DependencyContainer;
 using LecturesScheduler.WebApi.Middleware.ErrorHandling;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -33,6 +35,18 @@ namespace LecturesScheduler.WebApi
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+
+            var connectionString = Configuration.GetSection("DatabaseConnectionString").Value;
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentNullException(nameof(connectionString), "Connection string not found");
+            }
+
+            services.AddDbContext<IDatabaseContext, DatabaseContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            }, ServiceLifetime.Transient);
 
             services.AddSwaggerGen(x =>
             {

@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj" />
     <ProjectReference Include="..\LecturesScheduler.Domain\LecturesScheduler.Domain.csproj" />
+    <ProjectReference Include="..\LecturesScheduler.Persistence\LecturesScheduler.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

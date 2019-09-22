@@ -29,9 +29,14 @@ namespace LecturesScheduler.WebApi.Controllers
                 return BadRequest("Lecturer first and last name must be provided");
             }
 
-            var schedule = _scheduleService.GetScheduleByName(lecturerFirstName, lecturerLastName).ToDto();
+            var schedule = _scheduleService.GetScheduleByName(lecturerFirstName, lecturerLastName);
 
-            return Ok(schedule);
+            if(schedule == null)
+            {
+                return NotFound($"No lectures found for {lecturerFirstName} {lecturerLastName}");
+            }
+
+            return Ok(schedule.ToDto());
         }
     }
 }

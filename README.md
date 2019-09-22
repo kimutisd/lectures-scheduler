@@ -127,3 +127,150 @@ Alright, so for this commit we already have done a lot of structuring, but one l
 ```
 
 That way, in Swagger documentation you will be able to see all properties exposed by this type. It is not a must, but always nice to have.
+
+## Fourth commit - persitence
+
+Adapter pattern and lose coupling - these are the two drivers that makes your solution re-usable.
+Basically, adapter pattern says (and this is my interpretation of it) that the code that is integrating with third parties should be changable very easily, without changing code in your other projects.
+So with database, it would be like this: if you're using MSSQL, and want to switch to user NoSql like MongoDB, then you should do you changes only in Persistence project, or create PersistenceNoSql project, and just plug it in into your application without changing anything else. Sound cool, right? But how do we achieve that?
+Well, you actually have almost achieved it, if you've been following my commits. Our WebApi project gets data from Services, and Services operates with Domain objects - so it does not know about entities or database implementation (which is yet to come). So if we would create a persitence project, and place all the database specific code to that project, but expose it via repository, then we would be consuming repository, in our service via interface. And voilà - you are completly loosely coupled, and can change database to other, without putting other code at risk. Lets implement it!
+
+First, you should create YourNamespace.Persistence project. In my example I will be using EF Core with code first migrations.
+To get started please install Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Design, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools Nugets package to your project.
+
+So first, lets go and create Entities folder in Domain project. In that project you should create you entity, and BaseEntity. Why do you need base class? There are some fields that has to go with each entity, such as Id, CreatedOn and so on, so there is no need to specify that in each class.
+Also, in you base entity, you must override equality methods. Why? Because if you won't then equality will be checked as for every other object - by reference, and that is not good, because when you have an entity, you should always have a business key, or at least id.
+This is an example, of how base entity could look like:
+```csharp
+    public class Entity
+    {
+        public Guid Id { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        protected virtual object Actual => this;
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Entity other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (Actual.GetType() != other.Actual.GetType())
+            {
+                return false;
+            }
+
+            if (Id == default || other.Id == default)
+            {
+                return false;
+            }
+
+            return Id == other.Id;
+        }
+
+        public static bool operator ==(Entity a, Entity b)
+        {
+            if (a is null && b is null)
+            {
+                return true;
+            }
+
+            if (a is null || b is null)
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Entity a, Entity b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Actual.GetType().ToString() + Id).GetHashCode();
+        }
+    }
+```
+
+After that, you have to create you DatabaseContext.cs and IDatabaseContext.cs and you have to specify in interface your entity in a DbSet like this:
+```csharp
+DbSet<YourEntity> YourEntities { get; set; }
+```
+
+In DatabaseContext class you should add two methods, that will be responsible for setting CreatedOn and ModifiedOn fields, so that you wouldn't need to:
+```csharp
+        private void OnEntityTracked(object sender, EntityTrackedEventArgs e)
+        {
+            if (!e.FromQuery && e.Entry.State == EntityState.Added && e.Entry.Entity is Entity entity)
+            {
+                entity.CreatedOn = DateTime.UtcNow;
+            }
+        }
+
+        private void OnEntityStateChanged(object sender, EntityStateChangedEventArgs e)
+        {
+            if (e.NewState == EntityState.Modified && e.Entry.Entity is Entity entity)
+            {
+                entity.ModifiedOn = DateTime.UtcNow;
+            }
+        }
+```
+
+and then register them in constructor:
+```csharp
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base(options)
+        {
+            ChangeTracker.Tracked += OnEntityTracked;
+            ChangeTracker.StateChanged += OnEntityStateChanged;
+        }
+```
+
+For setting up you entity, you should be using either fluent api or attributes, but NOT BOTH.
+
+Now, so that you would not forget, lets go and register database context in the container by adding this to Startup.cs ConfigureServices method:
+```csharp
+var connectionString = Configuration.GetSection("DatabaseConnectionString").Value;
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentNullException(nameof(connectionString), "Connection string not found");
+            }
+
+            services.AddDbContext<IDatabaseContext, DatabaseContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            }, ServiceLifetime.Transient);
+```
+
+and also we have to add our connection string to appSettings.Development.json (for production version we should setup transformation in appSettings.json)"
+```json
+"DatabaseConnectionString": "data source=(LocalDb)\\MSSQLLocalDB;initial catalog=YourDatabaseName;integrated security=True;MultipleActiveResultSets=True;App=YourApplicationNAme;;MultiSubnetFailover=true;Connect Timeout=30"
+```
+
+Now you are ready to add migrations. Open Package Manager Consoler and make sure, that your startup project is WebApi, DefaultProject is Persistence and PackageSource is set to nuget.org, and type in
+```
+Add-Migration "Initial"
+```
+After this command, you will see that in Persistence project there is Migrations folder created, with your Initial migration!
+
+To execute it on the database that is specified in appsetings.Development.json, you should type in:
+```
+Update-Database
+```
+
+After this command, if it executes without errors you can go into you SQL manager (I am using Microsoft SQL Server Management Studio) and see that database is created.
+
+And that is more or less it: for using it you have to create repository class with and interface under Services folder, and inject that reposiroty into Service that is called by controller. Basically, it is same actions that we already did, so I will not go into details, but you will be able to see it my commit.
