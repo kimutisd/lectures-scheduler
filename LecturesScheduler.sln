@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.WebApi", "LecturesScheduler.WebApi\LecturesScheduler.WebApi.csproj", "{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Contracts", "LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj", "{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,7 +17,7 @@ namespace LecturesScheduler.WebApi.Controllers
             if(string.IsNullOrEmpty(lecturerFirstName) || string.IsNullOrEmpty(lecturerLastName))
             {
                 return BadRequest("Lecturer first and last name must be provided");
-            }
+            } 
 
             return Ok(new {lectureName = "TOP", lectureTime = DateTime.Now });
         }

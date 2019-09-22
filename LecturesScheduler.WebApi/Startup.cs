@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using LecturesScheduler.WebApi.Middleware.DependencyContainer;
+using LecturesScheduler.WebApi.Middleware.ErrorHandling;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace LecturesScheduler.WebApi
 {
@@ -25,8 +28,12 @@ namespace LecturesScheduler.WebApi
             Configuration = builder.Build();
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Info { Title = "LecturesScheduler API", Version = "v1" });
@@ -37,6 +44,8 @@ namespace LecturesScheduler.WebApi
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            return services.RegisterAutofacDependencies(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +79,7 @@ namespace LecturesScheduler.WebApi
                 await next();
             });
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
