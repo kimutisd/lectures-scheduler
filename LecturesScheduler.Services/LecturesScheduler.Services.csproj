@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj" />
+    <ProjectReference Include="..\LecturesScheduler.Domain\LecturesScheduler.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

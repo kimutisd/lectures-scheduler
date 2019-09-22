@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.WebApi", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Contracts", "LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj", "{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Services", "LecturesScheduler.Services\LecturesScheduler.Services.csproj", "{E75D86C8-A90C-4162-A657-6060E7FE174C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Domain", "LecturesScheduler.Domain\LecturesScheduler.Domain.csproj", "{48B2B18E-179B-443A-94EB-08744E73AEE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

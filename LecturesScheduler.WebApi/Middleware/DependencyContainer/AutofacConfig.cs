@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using LecturesScheduler.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -19,7 +20,9 @@ namespace LecturesScheduler.WebApi.Middleware.DependencyContainer
 
             containerBuilder.Populate(services);
 
-            containerBuilder.Register(x => Log.Logger).SingleInstance(); 
+            containerBuilder.Register(x => Log.Logger).SingleInstance();
+
+            containerBuilder.RegisterType<ScheduleService>().As<IScheduleService>().InstancePerDependency();
 
             var container = containerBuilder.Build();
             var serviceProvider = new AutofacServiceProvider(container);

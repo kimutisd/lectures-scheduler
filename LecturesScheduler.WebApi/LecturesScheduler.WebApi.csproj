@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj" />
+    <ProjectReference Include="..\LecturesScheduler.Services\LecturesScheduler.Services.csproj" />
   </ItemGroup>
 
 </Project>
