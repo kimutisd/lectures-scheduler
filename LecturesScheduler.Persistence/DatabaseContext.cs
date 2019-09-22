@@ -16,6 +16,11 @@ namespace LecturesScheduler.Persistence
             ChangeTracker.StateChanged += OnEntityStateChanged;
         }
 
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ScheduleEntity>(x =>

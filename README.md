@@ -6,6 +6,9 @@ where the service is a bit more advanced and structured in a nice way with using
 ## Testing
 This is a disclaimer about testing in this project - as for this moment there will be no tests, because this solution is a display of practises used to create a service. Basically, there would be two test projects - UnitTests and IntegrationTests. That will come in the later lectures, and might be included here as new commits.
 
+## Disclaimer
+This project is for the sake of example, so it might contain bugs, and in many places proper validation.
+
 ## First commit - basic application
 In our first commit we can see basic web api set up with swagger support.
 At this point we have no error handling, no database, simply a controller that returns hardcoded value.
@@ -341,3 +344,7 @@ var host = CreateWebHostBuilder(args).Build();
 ```
 
 After this, you application will be updating database, if there is something to update, everytime you will start it. Besides that, couple more refactorings are being done in this commit, but nothing more that is worth mentioning.
+
+## Seventh commit - adding POST
+
+With this commit POST request are implemented, to seed data to the database, also GetById is exposed. Nothing fancy is added, so it commit basically explains itself - enjoy!
