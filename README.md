@@ -3,6 +3,9 @@ This is a showcase .NET Core 2.2 Web API solution, for displaying on how service
 If you want to see how this service evolves, you should follow from the first commit, where the service is very basic, to the last commit,
 where the service is a bit more advanced and structured in a nice way with using EF.
 
+## Testing
+This is a disclaimer about testing in this project - as for this moment there will be no tests, because this solution is a display of practises used to create a service. Basically, there would be two test projects - UnitTests and IntegrationTests. That will come in the later lectures, and might be included here as new commits.
+
 ## First commit - basic application
 In our first commit we can see basic web api set up with swagger support.
 At this point we have no error handling, no database, simply a controller that returns hardcoded value.
@@ -274,3 +277,67 @@ Update-Database
 After this command, if it executes without errors you can go into you SQL manager (I am using Microsoft SQL Server Management Studio) and see that database is created.
 
 And that is more or less it: for using it you have to create repository class with and interface under Services folder, and inject that reposiroty into Service that is called by controller. Basically, it is same actions that we already did, so I will not go into details, but you will be able to see it my commit.
+
+## Fifth commit - updating database on startup
+
+If you have plans of shipping your project, that means you will not be able to run Update-Database all the time, and even for local purposes, sometimes it gets annoying. Lets write some code that would run your pending migrations on startup of the application.
+
+First - add to Persistence project folder named Extensions and add new class under that folder DatabaseMigrationExtensions.cs which should look like:
+```csharp
+public static class DatabaseMigrationExtensions
+    {
+        public static void MigrateDatabase<TDbContext>(this TDbContext dbContext) where TDbContext : DbContext
+        {
+            var db = dbContext.Database;           
+
+            var migrate = false;
+            foreach (var pendingMigration in db.GetPendingMigrations())
+            {
+                migrate = true;
+                Console.WriteLine($"These are the migration that will be applied: {pendingMigration}.");
+            }
+
+            if (migrate)
+            {
+                Console.WriteLine("Applying DB migrations ...");
+                db.SetCommandTimeout(3 * 60);
+                db.Migrate();
+            }
+            else
+            {
+                Console.WriteLine("No pending DB migrations.");
+            }
+        }
+    }
+```
+
+This class will be responsible for running migrations, if there are some.
+Then you need to add the following code to Program.cs
+```csharp
+private static void MigrateDatabase(IWebHost host)
+        {
+            var scope = host.Services.CreateScope();
+            using (scope)
+            {
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetSection("DatabaseConnectionString").Value;
+                var baseOptions = scope.ServiceProvider.GetRequiredService<DbContextOptions<DatabaseContext>>();
+                var options = new DbContextOptionsBuilder<DatabaseContext>(baseOptions).UseSqlServer(connectionString);
+
+                using (var db = new DatabaseContext(options.Options))
+                {
+                    db.MigrateDatabase();
+                }
+
+            }
+        }
+```
+
+and refactor Main method:
+```csharp
+var host = CreateWebHostBuilder(args).Build();
+            MigrateDatabase(host);
+            host.Run();
+```
+
+After this, you application will be updating database, if there is something to update, everytime you will start it. Besides that, couple more refactorings are being done in this commit, but nothing more that is worth mentioning.

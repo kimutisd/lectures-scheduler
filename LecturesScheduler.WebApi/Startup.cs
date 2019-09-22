@@ -1,4 +1,5 @@
 ﻿using LecturesScheduler.Persistence;
+using LecturesScheduler.Persistence.Extensions;
 using LecturesScheduler.WebApi.Middleware.DependencyContainer;
 using LecturesScheduler.WebApi.Middleware.ErrorHandling;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +37,24 @@ namespace LecturesScheduler.WebApi
                 .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
+            ConfigureDatabase(services);
+
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Info { Title = "LecturesScheduler API", Version = "v1" });
+                x.DescribeAllEnumsAsStrings();
+            });
+
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            return services.RegisterAutofacDependencies(Configuration);
+        }
+
+        private void ConfigureDatabase(IServiceCollection services)
+        {            
             var connectionString = Configuration.GetSection("DatabaseConnectionString").Value;
 
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -47,19 +66,6 @@ namespace LecturesScheduler.WebApi
             {
                 options.UseSqlServer(connectionString);
             }, ServiceLifetime.Transient);
-
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new Info { Title = "LecturesScheduler API", Version = "v1" });
-                x.DescribeAllEnumsAsStrings();
-            });
-
-            services.AddSingleton(Configuration);
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            return services.RegisterAutofacDependencies(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +102,6 @@ namespace LecturesScheduler.WebApi
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
+        }       
     }
 }
