@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
 using Serilog;
 using System;
@@ -58,7 +57,7 @@ namespace LecturesScheduler.WebApi.Middleware.ErrorHandling
 
         private async Task LogErrorExceptionWithRequestBody(HttpContext context, Exception exception)
         {
-            context.Request.EnableRewind();
+            context.Request.EnableBuffering();
             context.Request.Body.Seek(0, SeekOrigin.Begin);
 
             using (var reader = new StreamReader(context.Request.Body))
