@@ -101,7 +101,6 @@ namespace LecturesScheduler.WebApi
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            //app.UseMvc();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Schedule}/{action=Index}");
