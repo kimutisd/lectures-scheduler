@@ -10,9 +10,9 @@ namespace LecturesScheduler.WebApi.Middleware.ErrorHandling
     {
         private readonly RequestDelegate _next;
         private readonly Serilog.ILogger _logger;
-        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, Serilog.ILogger logger, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
+        public ErrorHandlingMiddleware(RequestDelegate next, Serilog.ILogger logger, IWebHostEnvironment environment)
         {
             _next = next;
             _logger = logger;

@@ -1,7 +1,6 @@
 ﻿using LecturesScheduler.Persistence;
 using LecturesScheduler.WebApi.Middleware.DependencyContainer;
 using LecturesScheduler.WebApi.Middleware.ErrorHandling;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
@@ -15,7 +14,7 @@ namespace LecturesScheduler.WebApi
 
         public IConfiguration Configuration { get; }
 
-        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -67,7 +66,7 @@ namespace LecturesScheduler.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
