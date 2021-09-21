@@ -15,12 +15,12 @@ namespace LecturesScheduler.Services.Services
             _scheduleRepository = scheduleRepository;
         }
 
-        public Schedule GetScheduleByName(string firstName, string lastName)
+        public Schedule? GetScheduleByName(string firstName, string lastName)
         {
             return _scheduleRepository.GetScheduleByName(firstName, lastName)?.ToDomain();
         }
 
-        public Schedule GetScheduleById(Guid id)
+        public Schedule? GetScheduleById(Guid id)
         {
             return _scheduleRepository.GetScheduleById(id)?.ToDomain();
         }

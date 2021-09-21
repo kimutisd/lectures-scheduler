@@ -4,11 +4,7 @@ using LecturesScheduler.Contracts.Outgoing;
 using LecturesScheduler.Services.Mapper;
 using LecturesScheduler.Services.Services;
 using LecturesScheduler.WebApi.Filters;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace LecturesScheduler.WebApi.Controllers
 {
@@ -29,7 +25,7 @@ namespace LecturesScheduler.WebApi.Controllers
         [ProducesResponseType(typeof(ScheduleDto), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetScheduleByName([FromUri] string lecturerFirstName, string lecturerLastName)
+        public async Task<IActionResult> GetScheduleByName([FromQuery] string lecturerFirstName, string lecturerLastName)
         {
             if(string.IsNullOrEmpty(lecturerFirstName) || string.IsNullOrEmpty(lecturerLastName))
             {
@@ -51,7 +47,7 @@ namespace LecturesScheduler.WebApi.Controllers
         [ProducesResponseType(typeof(ScheduleDto), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetScheduleById([FromUri] string id)
+        public async Task<IActionResult> GetScheduleById([FromQuery] string id)
         {
             if (!Guid.TryParse(id, out var scheduleId))
             {
@@ -73,7 +69,7 @@ namespace LecturesScheduler.WebApi.Controllers
         [ProducesResponseType(typeof(ScheduleDto), 200)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(400)]
-        public IActionResult AddNewScheduleForLecturer([System.Web.Http.FromBody] LecturerScheduleDto lecturerSchduleDto)
+        public IActionResult AddNewScheduleForLecturer([FromBody] LecturerScheduleDto lecturerSchduleDto)
         {
             var scheduleId = _scheduleService.AddSchedule(lecturerSchduleDto);
 
