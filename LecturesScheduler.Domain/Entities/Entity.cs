@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LecturesScheduler.Domain.Entities
+﻿namespace LecturesScheduler.Domain.Entities
 {
     public class Entity
     {
@@ -14,7 +12,7 @@ namespace LecturesScheduler.Domain.Entities
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Entity other))
+            if (obj is not Entity other)
             {
                 return false;
             }

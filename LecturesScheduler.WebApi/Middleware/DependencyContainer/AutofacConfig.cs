@@ -2,10 +2,7 @@
 using Autofac.Extensions.DependencyInjection;
 using LecturesScheduler.Services.Reposiroty;
 using LecturesScheduler.Services.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System;
 
 namespace LecturesScheduler.WebApi.Middleware.DependencyContainer
 {

@@ -4,7 +4,7 @@ namespace LecturesScheduler.Contracts
 {
     public class ErrorDetails
     {
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         public override string ToString()
         {

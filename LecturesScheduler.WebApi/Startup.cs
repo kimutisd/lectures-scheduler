@@ -1,16 +1,10 @@
 ﻿using LecturesScheduler.Persistence;
-using LecturesScheduler.Persistence.Extensions;
 using LecturesScheduler.WebApi.Middleware.DependencyContainer;
 using LecturesScheduler.WebApi.Middleware.ErrorHandling;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using Serilog;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
 
 namespace LecturesScheduler.WebApi
 {
@@ -20,7 +14,7 @@ namespace LecturesScheduler.WebApi
 
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -31,6 +25,7 @@ namespace LecturesScheduler.WebApi
             Configuration = builder.Build();
         }
 
+        [Obsolete]
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             Log.Logger = new LoggerConfiguration()
@@ -41,20 +36,22 @@ namespace LecturesScheduler.WebApi
 
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new Info { Title = "LecturesScheduler API", Version = "v1" });
-                x.DescribeAllEnumsAsStrings();
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "LecturesScheduler API", Version = "v1" });
             });
+            services.AddSwaggerGenNewtonsoftSupport();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            _ = services.AddMvc();
 
             return services.RegisterAutofacDependencies(Configuration);
         }
 
         private void ConfigureDatabase(IServiceCollection services)
-        {            
+        {
             var connectionString = Configuration.GetSection("DatabaseConnectionString").Value;
 
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -69,7 +66,7 @@ namespace LecturesScheduler.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -101,7 +98,12 @@ namespace LecturesScheduler.WebApi
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
-            app.UseMvc();
-        }       
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Schedule}/{action=Index}");
+            });
+        }
     }
 }

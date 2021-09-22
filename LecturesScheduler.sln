@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.WebApi", "LecturesScheduler.WebApi\LecturesScheduler.WebApi.csproj", "{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.WebApi", "LecturesScheduler.WebApi\LecturesScheduler.WebApi.csproj", "{849BC288-8443-4BC9-B05F-EAA05D23CC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Contracts", "LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj", "{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Services", "LecturesScheduler.Services\LecturesScheduler.Services.csproj", "{E08AC540-E911-481E-ACC2-C9586B956ACC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Services", "LecturesScheduler.Services\LecturesScheduler.Services.csproj", "{E75D86C8-A90C-4162-A657-6060E7FE174C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Domain", "LecturesScheduler.Domain\LecturesScheduler.Domain.csproj", "{100DF71F-014B-48E2-98C7-07637E6563E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Domain", "LecturesScheduler.Domain\LecturesScheduler.Domain.csproj", "{48B2B18E-179B-443A-94EB-08744E73AEE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Persistence", "LecturesScheduler.Persistence\LecturesScheduler.Persistence.csproj", "{2796AD70-0E0B-4E5F-B256-531F18F60C18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Persistence", "LecturesScheduler.Persistence\LecturesScheduler.Persistence.csproj", "{68F59FB3-0C17-41C3-BC16-FD3D72E7B931}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LecturesScheduler.Contracts", "LecturesScheduler.Contracts\LecturesScheduler.Contracts.csproj", "{15FAC534-5D5D-4BFA-BC05-1C072B3BFFDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,31 +19,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C32C5B10-FCEF-4E73-9CA9-A82B7143D2AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3CCD786-BBFD-4213-B9A9-1C500B04B0DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E75D86C8-A90C-4162-A657-6060E7FE174C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48B2B18E-179B-443A-94EB-08744E73AEE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68F59FB3-0C17-41C3-BC16-FD3D72E7B931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68F59FB3-0C17-41C3-BC16-FD3D72E7B931}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68F59FB3-0C17-41C3-BC16-FD3D72E7B931}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68F59FB3-0C17-41C3-BC16-FD3D72E7B931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849BC288-8443-4BC9-B05F-EAA05D23CC70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849BC288-8443-4BC9-B05F-EAA05D23CC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849BC288-8443-4BC9-B05F-EAA05D23CC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849BC288-8443-4BC9-B05F-EAA05D23CC70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E08AC540-E911-481E-ACC2-C9586B956ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08AC540-E911-481E-ACC2-C9586B956ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08AC540-E911-481E-ACC2-C9586B956ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08AC540-E911-481E-ACC2-C9586B956ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100DF71F-014B-48E2-98C7-07637E6563E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100DF71F-014B-48E2-98C7-07637E6563E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100DF71F-014B-48E2-98C7-07637E6563E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100DF71F-014B-48E2-98C7-07637E6563E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2796AD70-0E0B-4E5F-B256-531F18F60C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2796AD70-0E0B-4E5F-B256-531F18F60C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2796AD70-0E0B-4E5F-B256-531F18F60C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2796AD70-0E0B-4E5F-B256-531F18F60C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FAC534-5D5D-4BFA-BC05-1C072B3BFFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FAC534-5D5D-4BFA-BC05-1C072B3BFFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FAC534-5D5D-4BFA-BC05-1C072B3BFFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FAC534-5D5D-4BFA-BC05-1C072B3BFFDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {74E1BF48-9C4A-474A-B48B-13819E7FCE1A}
+		SolutionGuid = {5E9B43B8-6271-4C82-9DED-2A803EA5FDEC}
 	EndGlobalSection
 EndGlobal

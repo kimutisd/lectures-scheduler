@@ -1,24 +1,18 @@
 ﻿using LecturesScheduler.Contracts;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
-using Serilog;
-using System;
-using System.IO;
 using System.Net;
-using System.Threading.Tasks;
+using Serilog;
 
 namespace LecturesScheduler.WebApi.Middleware.ErrorHandling
 {
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
-        private readonly IHostingEnvironment _environment;
+        private readonly Serilog.ILogger _logger;
+        private readonly IWebHostEnvironment _environment;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, ILogger logger, IHostingEnvironment environment)
+        public ErrorHandlingMiddleware(RequestDelegate next, Serilog.ILogger logger, IWebHostEnvironment environment)
         {
             _next = next;
             _logger = logger;
@@ -58,7 +52,7 @@ namespace LecturesScheduler.WebApi.Middleware.ErrorHandling
 
         private async Task LogErrorExceptionWithRequestBody(HttpContext context, Exception exception)
         {
-            context.Request.EnableRewind();
+            context.Request.EnableBuffering();
             context.Request.Body.Seek(0, SeekOrigin.Begin);
 
             using (var reader = new StreamReader(context.Request.Body))
